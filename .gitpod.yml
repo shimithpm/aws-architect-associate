@@ -2,14 +2,12 @@
 tasks:
   - name: powershell
     before: |
-        sudo apt-get update 
-        sudo apt-get install -y wget
-        source /etc/os-release
-        wget -q https://packages.microsoft.com/config/debian/$VERSION_ID/packages-microsoft-prod.deb
-        sudo dpkg -i packages-microsoft-prod.deb
-        rm packages-microsoft-prod.deb
         sudo apt-get update
-        sudo apt-get install -y powershell
+        sudo apt-get install -y wget
+        wget https://github.com/PowerShell/PowerShell/releases/download/v7.5.0/powershell_7.5.0-1.deb_amd64.deb
+        sudo dpkg -i powershell_7.5.0-1.deb_amd64.deb
+        sudo apt-get install -f
+        rm powershell_7.5.0-1.deb_amd64.deb
         pwsh
   - name: aws-cli
     env:
