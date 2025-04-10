@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+echo "S3 using cloudformation"
+STACK_NAME=$1
+aws cloudformation deploy \
+--template-file template.yml \
+--no-execute-changeset \
+--stack-name $STACK_NAME
