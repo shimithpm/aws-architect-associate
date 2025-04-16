@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  glue-etl:
+    image: public.ecr.aws/glue/aws-glue-libs:glue_libs_4.0.0_image_01
+    container_name: aws-glue-local
+    volumes:
+      - ./scripts:/home/glue_user/scripts
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: mydatabase
+      SCRIPT_NAME: script1
+    working_dir: /home/glue_user/scripts
+    entrypoint: ["tail", "-f", "/dev/null"]
+  db:
+    image: postgres:13
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
